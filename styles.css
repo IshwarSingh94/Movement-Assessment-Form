@@ -263,4 +263,10 @@ button:active {
     .score-number {
         font-size: 2em;
     }
+}
+
+.google-sign-in {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
 } 
