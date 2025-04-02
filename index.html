@@ -55,7 +55,10 @@
         <label><input type="checkbox" name="single_leg" value="Knees aligned over or behind the toes"> Knees aligned over or behind the toes</label>
         <label><input type="checkbox" name="single_leg" value="Vertical torso"> Vertical torso</label>
         
-        <button onclick="submitQuiz()"><i class="fas fa-check"></i> Submit Assessment</button>
+        <div class="button-group">
+            <button type="button" onclick="submitQuiz()" class="submit-btn">Submit Assessment</button>
+            <button type="button" onclick="resetForm()" class="reset-btn">Reset Form</button>
+        </div>
     </div>
 
     <!-- Result Popup -->
