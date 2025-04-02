@@ -13,7 +13,7 @@
         const messageDiv = document.createElement('div');
         messageDiv.className = `status-message ${isError ? 'error' : 'success'}`;
         messageDiv.textContent = message;
-        document.querySelector('.container').insertBefore(messageDiv, document.querySelector('.form-container'));
+        document.body.appendChild(messageDiv);
         
         setTimeout(() => {
             messageDiv.remove();
@@ -100,13 +100,13 @@
         
         // Check if user is signed in
         if (!isApiInitialized) {
-            alert('Please sign in with Google first to submit your assessment.');
+            showStatusMessage('Please sign in with Google first to submit your assessment.', true);
             return;
         }
 
         const name = document.getElementById('name').value;
         if (!name) {
-            alert("Please enter your name.");
+            showStatusMessage('Please enter your name.', true);
             return;
         }
         
@@ -129,15 +129,21 @@
         console.log('Score calculated:', checkedBoxes, 'out of', totalCheckboxes);
         
         // Display the score in popup
-        document.getElementById('result').innerText = `${name}, your assessment results:`;
-        document.getElementById('scoreNumber').innerText = checkedBoxes;
-        
-        // Show popup
         const popup = document.getElementById('resultPopup');
-        popup.style.display = 'flex';
+        const resultText = document.getElementById('result');
+        const scoreNumber = document.getElementById('scoreNumber');
         
-        // Save to Google Sheets
-        saveToGoogleSheets(name, answers, checkedBoxes, totalCheckboxes);
+        if (resultText && scoreNumber && popup) {
+            resultText.innerText = `${name}, your assessment results:`;
+            scoreNumber.innerText = checkedBoxes;
+            popup.style.display = 'flex';
+            
+            // Save to Google Sheets
+            saveToGoogleSheets(name, answers, checkedBoxes, totalCheckboxes);
+        } else {
+            console.error('Popup elements not found');
+            showStatusMessage('Error displaying results. Please try again.', true);
+        }
     }
 
     function saveToGoogleSheets(name, answers, score, total) {
@@ -166,16 +172,18 @@
             }
         }).then(function(response) {
             console.log('Data saved successfully:', response);
-            alert('Assessment saved successfully!');
+            showStatusMessage('Assessment saved successfully!');
         }).catch(function(error) {
             console.error('Error saving data:', error);
-            alert('Error saving data to Google Sheets. Please try again.');
+            showStatusMessage('Error saving data to Google Sheets. Please try again.', true);
         });
     }
 
     function closePopup() {
         const popup = document.getElementById('resultPopup');
-        popup.style.display = 'none';
+        if (popup) {
+            popup.style.display = 'none';
+        }
     }
 
     function resetForm() {
@@ -190,22 +198,19 @@
         // Close the popup if it's open
         closePopup();
         
-        // Show a brief success message
-        const message = document.createElement('div');
-        message.className = 'success-message';
-        message.textContent = 'Form reset successfully!';
-        document.querySelector('.container').appendChild(message);
-        
-        // Remove the message after 2 seconds
-        setTimeout(() => {
-            message.remove();
-        }, 2000);
+        // Show success message
+        showStatusMessage('Form reset successfully!');
     }
 
     // Close popup when clicking outside
-    document.getElementById('resultPopup').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closePopup();
+    document.addEventListener('DOMContentLoaded', function() {
+        const popup = document.getElementById('resultPopup');
+        if (popup) {
+            popup.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePopup();
+                }
+            });
         }
     });
 
