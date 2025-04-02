@@ -5,6 +5,7 @@
     const API_KEY = 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I';
 
     let isApiInitialized = false;
+    let tokenClient;
 
     // Show status message to user
     function showStatusMessage(message, isError = false) {
@@ -18,49 +19,63 @@
         }, 5000);
     }
 
-    // Handle the credential response from Google Sign-In
-    function handleCredentialResponse(response) {
-        console.log('Credential response received:', response);
-        
-        if (response.credential) {
-            // Initialize Google Sheets API
+    // Initialize the Google API client
+    function initializeGoogleApi() {
+        return new Promise((resolve, reject) => {
             gapi.load('client', function() {
                 gapi.client.init({
                     apiKey: API_KEY,
                     discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
                 }).then(function() {
                     console.log('Google Sheets API initialized successfully');
-                    
-                    // Get the ID token
-                    const idToken = response.credential;
-                    
-                    // Exchange the ID token for an access token
-                    gapi.client.init({
-                        apiKey: API_KEY,
-                        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-                        clientId: CLIENT_ID,
-                        scope: 'https://www.googleapis.com/auth/spreadsheets'
-                    }).then(function() {
-                        // Set the token
+                    resolve();
+                }).catch(function(error) {
+                    console.error('Error initializing Google Sheets API:', error);
+                    reject(error);
+                });
+            });
+        });
+    }
+
+    // Handle the credential response from Google Sign-In
+    async function handleCredentialResponse(response) {
+        console.log('Credential response received:', response);
+        
+        try {
+            if (!response.credential) {
+                throw new Error('No credential received');
+            }
+
+            // Initialize Google API client
+            await initializeGoogleApi();
+            
+            // Get the ID token
+            const idToken = response.credential;
+            
+            // Set up token client
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: 'https://www.googleapis.com/auth/spreadsheets',
+                callback: (tokenResponse) => {
+                    if (tokenResponse.access_token) {
                         gapi.client.setToken({
-                            access_token: idToken
+                            access_token: tokenResponse.access_token
                         });
                         console.log('User authenticated successfully');
                         isApiInitialized = true;
                         showStatusMessage('Successfully signed in with Google!');
-                    }).catch(function(error) {
-                        console.error('Error setting token:', error);
-                        isApiInitialized = false;
-                        showStatusMessage('Error authenticating with Google. Please try again.', true);
-                    });
-                }).catch(function(error) {
-                    console.error('Error initializing Google Sheets API:', error);
-                    isApiInitialized = false;
-                    showStatusMessage('Error initializing Google Sheets API. Please refresh the page.', true);
-                });
+                    } else {
+                        throw new Error('No access token received');
+                    }
+                },
             });
-        } else {
-            console.error('No credential received from Google Sign-In');
+
+            // Request access token
+            tokenClient.requestAccessToken();
+            
+        } catch (error) {
+            console.error('Error during authentication:', error);
+            isApiInitialized = false;
             showStatusMessage('Error signing in with Google. Please try again.', true);
         }
     }
