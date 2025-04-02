@@ -1,6 +1,10 @@
 // Google Sheets API configuration
 const SPREADSHEET_ID = '1QCUTnTy5hJ96uD8VSUauO44P5FcwNp9xYb1yTfK-BWA';
 const SHEET_NAME = 'NewAssessment';
+const CLIENT_ID = 'YOUR_CLIENT_ID'; // You'll need to replace this with your OAuth 2.0 Client ID
+const API_KEY = 'YOUR_API_KEY'; // You'll need to replace this with your API key
+
+let isApiInitialized = false;
 
 function submitQuiz() {
     console.log('Form submitted');
@@ -37,7 +41,12 @@ function submitQuiz() {
     popup.style.display = 'flex';
     
     // Save to Google Sheets
-    saveToGoogleSheets(name, answers, checkedBoxes, totalCheckboxes);
+    if (isApiInitialized) {
+        saveToGoogleSheets(name, answers, checkedBoxes, totalCheckboxes);
+    } else {
+        console.error('Google Sheets API not initialized');
+        alert('Error: Google Sheets API not initialized. Please try again.');
+    }
 }
 
 function saveToGoogleSheets(name, answers, score, total) {
@@ -88,15 +97,18 @@ document.getElementById('resultPopup').addEventListener('click', function(e) {
 function initClient() {
     console.log('Initializing Google Sheets API');
     gapi.client.init({
-        apiKey: 'AIzaSyBxXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXh', // Replace with your actual API key
+        apiKey: API_KEY,
         discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+        clientId: CLIENT_ID,
         scope: 'https://www.googleapis.com/auth/spreadsheets'
     }).then(function() {
         console.log('Google Sheets API initialized successfully');
+        isApiInitialized = true;
     }).catch(function(error) {
         console.error('Error initializing Google Sheets API:', error);
+        isApiInitialized = false;
     });
 }
 
 // Load the Google Sheets API
-gapi.load('client', initClient); 
+gapi.load('client:auth2', initClient); 
