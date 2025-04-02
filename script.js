@@ -256,27 +256,5 @@
     // Load the Google Sheets API
     gapi.load('client', initClient);
 
-    // Initialize Google Identity Services
-    google.accounts.id.initialize({
-        client_id: CLIENT_ID,
-        callback: function(response) {
-            if (response.credential) {
-                handleGoogleSignIn();
-            } else {
-                console.error('No credential received from Google Sign-In');
-                showStatusMessage('Error signing in with Google. Please try again.', true);
-                isSignInInProgress = false;
-            }
-        }
-    });
-
-    // Render the Google Sign-In button
-    google.accounts.id.renderButton(
-        document.getElementById('googleSignInDiv'),
-        { 
-            theme: 'outline', 
-            size: 'large',
-            text: 'signin_with',
-            shape: 'rectangular'
-        }
-    ); 
+    // Initialize Google Identity Services - REMOVED DUPLICATE INITIALIZATION
+    // The button is already rendered in the HTML with the google-signin-client_id meta tag 
