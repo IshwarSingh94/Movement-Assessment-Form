@@ -112,32 +112,63 @@ input[type="checkbox"] {
     accent-color: var(--primary-color);
 }
 
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: var(--border-radius);
-    cursor: pointer;
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
     margin-top: 20px;
-    font-size: 1.1em;
+}
+
+.submit-btn, .reset-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
     font-weight: 600;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    gap: 8px;
 }
 
-button:hover {
-    background-color: #357abd;
+.submit-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+.reset-btn {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.submit-btn:hover, .reset-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-button:active {
-    transform: translateY(0);
+.success-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease-out;
+    z-index: 1000;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* Popup Styles */
@@ -269,4 +300,39 @@ button:active {
     margin: 20px 0;
     display: flex;
     justify-content: center;
+}
+
+.status-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease-out;
+    z-index: 1000;
+    font-weight: 500;
+    max-width: 300px;
+    text-align: center;
+}
+
+.status-message.success {
+    background: var(--accent-color);
+    color: white;
+}
+
+.status-message.error {
+    background: #dc3545;
+    color: white;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 } 
