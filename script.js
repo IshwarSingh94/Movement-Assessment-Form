@@ -31,22 +31,28 @@
                 }).then(function() {
                     console.log('Google Sheets API initialized successfully');
                     
-                    // Get access token from credential
-                    const credential = response.credential;
-                    const token = credential.access_token;
+                    // Get the ID token
+                    const idToken = response.credential;
                     
-                    if (token) {
-                        // Set the access token
+                    // Exchange the ID token for an access token
+                    gapi.client.init({
+                        apiKey: API_KEY,
+                        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+                        clientId: CLIENT_ID,
+                        scope: 'https://www.googleapis.com/auth/spreadsheets'
+                    }).then(function() {
+                        // Set the token
                         gapi.client.setToken({
-                            access_token: token,
+                            access_token: idToken
                         });
                         console.log('User authenticated successfully');
                         isApiInitialized = true;
                         showStatusMessage('Successfully signed in with Google!');
-                    } else {
-                        console.error('No access token in credential');
-                        showStatusMessage('Error signing in with Google. Please try again.', true);
-                    }
+                    }).catch(function(error) {
+                        console.error('Error setting token:', error);
+                        isApiInitialized = false;
+                        showStatusMessage('Error authenticating with Google. Please try again.', true);
+                    });
                 }).catch(function(error) {
                     console.error('Error initializing Google Sheets API:', error);
                     isApiInitialized = false;
