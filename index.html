@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Assessment Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Google Sheets API -->
+    <script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-dumbbell"></i>
+            <h2>Physical Assessment Quiz</h2>
+        </div>
+        <label>Name: <input type="text" id="name" placeholder="Enter your name"></label>
+        
+        <h3><i class="fas fa-running"></i> Squat</h3>
+        <label><input type="checkbox" name="squat" value="Hips back and down"> Hips back and down</label>
+        <label><input type="checkbox" name="squat" value="Weight on heels"> Weight on heels</label>
+        <label><input type="checkbox" name="squat" value="Knees track over toes"> Knees track over toes</label>
+        <label><input type="checkbox" name="squat" value="Hips below knee level"> Hips below knee level</label>
+        <label><input type="checkbox" name="squat" value="Neutral spine"> Neutral spine</label>
+        
+        <h3><i class="fas fa-person-walking"></i> Hinge</h3>
+        <label><input type="checkbox" name="hinge" value="Hips move back first"> Hips move back first</label>
+        <label><input type="checkbox" name="hinge" value="Weight on mid-foot"> Weight on mid-foot</label>
+        <label><input type="checkbox" name="hinge" value="Hips and shoulders rise simultaneously"> Hips and shoulders rise simultaneously</label>
+        <label><input type="checkbox" name="hinge" value="Neutral Spine"> Neutral Spine</label>
+        <label><input type="checkbox" name="hinge" value="Active shoulders"> Active shoulders</label>
+        
+        <h3><i class="fas fa-hand-push"></i> Push</h3>
+        <label><input type="checkbox" name="push" value="Active shoulders"> Active shoulders</label>
+        <label><input type="checkbox" name="push" value="Neutral Spine"> Neutral Spine</label>
+        <label><input type="checkbox" name="push" value="Movement initiated with Elbows"> Movement initiated with Elbows</label>
+        <label><input type="checkbox" name="push" value="Hips and shoulders rise together"> Hips and shoulders rise together</label>
+        <label><input type="checkbox" name="push" value="Elbows close to the ribs"> Elbows close to the ribs</label>
+        
+        <h3><i class="fas fa-hand-pull"></i> Pull</h3>
+        <label><input type="checkbox" name="pull" value="Active shoulders"> Active shoulders</label>
+        <label><input type="checkbox" name="pull" value="Neutral spine"> Neutral spine</label>
+        <label><input type="checkbox" name="pull" value="Movement initiated with Elbows"> Movement initiated with Elbows</label>
+        <label><input type="checkbox" name="pull" value="Weight on mid foot"> Weight on mid foot</label>
+        <label><input type="checkbox" name="pull" value="Elbows close to the ribs"> Elbows close to the ribs</label>
+        
+        <h3><i class="fas fa-person-walking"></i> Single Leg</h3>
+        <label><input type="checkbox" name="single_leg" value="Weight on heels"> Weight on heels</label>
+        <label><input type="checkbox" name="single_leg" value="Knees track over toes"> Knees track over toes</label>
+        <label><input type="checkbox" name="single_leg" value="Neutral Spine"> Neutral Spine</label>
+        <label><input type="checkbox" name="single_leg" value="Knees aligned over or behind the toes"> Knees aligned over or behind the toes</label>
+        <label><input type="checkbox" name="single_leg" value="Vertical torso"> Vertical torso</label>
+        
+        <button onclick="submitQuiz()"><i class="fas fa-check"></i> Submit Assessment</button>
+    </div>
+
+    <!-- Result Popup -->
+    <div id="resultPopup" class="popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <i class="fas fa-trophy"></i>
+                <h3>Assessment Results</h3>
+            </div>
+            <div class="popup-body">
+                <p id="result"></p>
+                <div class="score-circle">
+                    <div class="score-number" id="scoreNumber">0</div>
+                    <div class="score-label">Points</div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <button onclick="closePopup()">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
