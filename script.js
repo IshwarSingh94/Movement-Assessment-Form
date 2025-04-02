@@ -97,9 +97,9 @@ document.getElementById('resultPopup').addEventListener('click', function(e) {
 function initClient() {
     console.log('Initializing Google Sheets API');
     gapi.client.init({
-        apiKey: API_KEY,
+        apiKey: AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I,
         discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-        clientId: CLIENT_ID,
+        clientId: 1023590062256-rcuj8srgfl08fm0pasobv750v3696n7s.apps.googleusercontent.com,
         scope: 'https://www.googleapis.com/auth/spreadsheets'
     }).then(function() {
         console.log('Google Sheets API initialized successfully');
