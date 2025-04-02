@@ -1,303 +1,179 @@
-:root {
-    --primary-color: #4a90e2;
-    --secondary-color: #2c3e50;
-    --accent-color: #e74c3c;
-    --background-color: #f5f6fa;
-    --text-color: #2c3e50;
-    --border-radius: 8px;
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+// Google Sheets API configuration
+const SPREADSHEET_ID = '1QCUTnTy5hJ96uD8VSUauO44P5FcwNp9xYb1yTfK-BWA';
+const SHEET_NAME = 'NewAssessment';
+const CLIENT_ID = '1023590062256-rcuj8srgfl08fm0pasobv750v3696n7s.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I';
+
+let isApiInitialized = false;
+let tokenClient;
+
+// Initialize Google Identity Services
+function initializeGoogleIdentity() {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        callback: handleTokenResponse
+    });
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    color: var(--text-color);
-    line-height: 1.6;
-    padding: 20px;
-}
-
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    max-width: 600px;
-    width: 100%;
-    margin: 20px auto;
-    position: relative;
-    z-index: 1;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.header i {
-    font-size: 2.5em;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-}
-
-h2 {
-    text-align: center;
-    color: var(--secondary-color);
-    margin-bottom: 30px;
-    font-size: 2em;
-}
-
-h3 {
-    color: var(--primary-color);
-    margin: 25px 0 15px;
-    font-size: 1.3em;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-h3 i {
-    font-size: 1.2em;
-}
-
-label {
-    display: block;
-    margin: 12px 0;
-    padding: 12px;
-    border-radius: var(--border-radius);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 1px solid transparent;
-}
-
-label:hover {
-    background-color: #f8f9fa;
-    border-color: var(--primary-color);
-    transform: translateX(5px);
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: var(--border-radius);
-    font-size: 1em;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-}
-
-input[type="text"]:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
-}
-
-input[type="checkbox"] {
-    margin-right: 10px;
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: var(--primary-color);
-}
-
-.button-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.submit-btn, .reset-btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.submit-btn {
-    background: var(--primary-color);
-    color: white;
-}
-
-.reset-btn {
-    background: var(--secondary-color);
-    color: white;
-}
-
-.submit-btn:hover, .reset-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.success-message {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--accent-color);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideIn 0.3s ease-out;
-    z-index: 1000;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Popup Styles */
-.popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease;
-}
-
-.popup-content {
-    background: white;
-    padding: 30px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    max-width: 400px;
-    width: 90%;
-    position: relative;
-    animation: slideIn 0.3s ease;
-}
-
-.popup-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.popup-header i {
-    font-size: 3em;
-    color: #ffd700;
-    margin-bottom: 10px;
-}
-
-.popup-body {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.score-circle {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color), #357abd);
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-}
-
-.score-number {
-    font-size: 2.5em;
-    font-weight: bold;
-}
-
-.score-label {
-    font-size: 1.1em;
-    opacity: 0.9;
-}
-
-.popup-footer {
-    text-align: center;
-}
-
-.popup-footer button {
-    width: auto;
-    padding: 10px 30px;
-    background-color: var(--accent-color);
-}
-
-.popup-footer button:hover {
-    background-color: #c0392b;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 480px) {
-    .container {
-        padding: 20px;
+// Handle the token response
+function handleTokenResponse(response) {
+    if (response.error !== undefined) {
+        console.error('Error getting token:', response.error);
+        return;
     }
     
-    h2 {
-        font-size: 1.8em;
+    // Save the access token
+    gapi.client.setToken({
+        access_token: response.access_token,
+    });
+    console.log('User authenticated successfully');
+    isApiInitialized = true;
+}
+
+// Initialize Google Sheets API
+function initClient() {
+    console.log('Initializing Google Sheets API');
+    gapi.client.init({
+        apiKey: API_KEY,
+        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
+    }).then(function() {
+        console.log('Google Sheets API initialized successfully');
+        initializeGoogleIdentity();
+    }).catch(function(error) {
+        console.error('Error initializing Google Sheets API:', error);
+        isApiInitialized = false;
+        alert('Error initializing Google Sheets API. Please check the console for details.');
+    });
+}
+
+function submitQuiz() {
+    console.log('Form submitted');
+    const name = document.getElementById('name').value;
+    if (!name) {
+        alert("Please enter your name.");
+        return;
     }
     
-    h3 {
-        font-size: 1.2em;
-    }
-
-    .popup-content {
-        padding: 20px;
-        width: 95%;
-    }
-
-    .score-circle {
-        width: 120px;
-        height: 120px;
-    }
-
-    .score-number {
-        font-size: 2em;
+    let answers = {};
+    document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+        if (input.checked) {
+            if (!answers[input.name]) {
+                answers[input.name] = [];
+            }
+            answers[input.name].push(input.value);
+        }
+    });
+    
+    console.log('Answers collected:', answers);
+    
+    // Calculate score based on number of checked items
+    let totalCheckboxes = document.querySelectorAll('input[type="checkbox"]').length;
+    let checkedBoxes = Object.values(answers).reduce((acc, curr) => acc + curr.length, 0);
+    
+    console.log('Score calculated:', checkedBoxes, 'out of', totalCheckboxes);
+    
+    // Display the score in popup
+    document.getElementById('result').innerText = `${name}, your assessment results:`;
+    document.getElementById('scoreNumber').innerText = checkedBoxes;
+    
+    // Show popup
+    const popup = document.getElementById('resultPopup');
+    popup.style.display = 'flex';
+    
+    // Save to Google Sheets
+    if (isApiInitialized) {
+        saveToGoogleSheets(name, answers, checkedBoxes, totalCheckboxes);
+    } else {
+        console.error('Google Sheets API not initialized');
+        alert('Please sign in with Google first.');
     }
 }
 
-.google-sign-in {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-} 
+function saveToGoogleSheets(name, answers, score, total) {
+    console.log('Attempting to save to Google Sheets');
+    const timestamp = new Date().toLocaleString();
+    const rowData = [
+        timestamp,
+        name,
+        answers.squat ? answers.squat.join(', ') : '',
+        answers.hinge ? answers.hinge.join(', ') : '',
+        answers.push ? answers.push.join(', ') : '',
+        answers.pull ? answers.pull.join(', ') : '',
+        answers.single_leg ? answers.single_leg.join(', ') : '',
+        `${score} / ${total}`
+    ];
+
+    console.log('Row data prepared:', rowData);
+
+    // Using Google Sheets API
+    gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${SHEET_NAME}!A:H`,
+        valueInputOption: 'USER_ENTERED',
+        resource: {
+            values: [rowData]
+        }
+    }).then(function(response) {
+        console.log('Data saved successfully:', response);
+        alert('Assessment saved successfully!');
+    }).catch(function(error) {
+        console.error('Error saving data:', error);
+        alert('Error saving data to Google Sheets. Please try again.');
+    });
+}
+
+function closePopup() {
+    const popup = document.getElementById('resultPopup');
+    popup.style.display = 'none';
+}
+
+function resetForm() {
+    // Clear all checkboxes
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    
+    // Clear the name input
+    document.getElementById('name').value = '';
+    
+    // Close the popup if it's open
+    closePopup();
+    
+    // Show a brief success message
+    const message = document.createElement('div');
+    message.className = 'success-message';
+    message.textContent = 'Form reset successfully!';
+    document.querySelector('.container').appendChild(message);
+    
+    // Remove the message after 2 seconds
+    setTimeout(() => {
+        message.remove();
+    }, 2000);
+}
+
+// Close popup when clicking outside
+document.getElementById('resultPopup').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closePopup();
+    }
+});
+
+// Load the Google Sheets API
+gapi.load('client', initClient);
+
+// Initialize Google Identity Services
+google.accounts.id.initialize({
+    client_id: CLIENT_ID,
+    callback: function(response) {
+        if (response.credential) {
+            tokenClient.requestAccessToken();
+        }
+    }
+});
+
+// Render the Google Sign-In button
+google.accounts.id.renderButton(
+    document.getElementById('googleSignInDiv'),
+    { theme: 'outline', size: 'large' }
+); 
