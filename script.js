@@ -3,6 +3,7 @@ const SPREADSHEET_ID = '1QCUTnTy5hJ96uD8VSUauO44P5FcwNp9xYb1yTfK-BWA';
 const SHEET_NAME = 'NewAssessment';
 
 function submitQuiz() {
+    console.log('Form submitted');
     const name = document.getElementById('name').value;
     if (!name) {
         alert("Please enter your name.");
@@ -19,9 +20,13 @@ function submitQuiz() {
         }
     });
     
+    console.log('Answers collected:', answers);
+    
     // Calculate score based on number of checked items
     let totalCheckboxes = document.querySelectorAll('input[type="checkbox"]').length;
     let checkedBoxes = Object.values(answers).reduce((acc, curr) => acc + curr.length, 0);
+    
+    console.log('Score calculated:', checkedBoxes, 'out of', totalCheckboxes);
     
     // Display the score in popup
     document.getElementById('result').innerText = `${name}, your assessment results:`;
@@ -36,6 +41,7 @@ function submitQuiz() {
 }
 
 function saveToGoogleSheets(name, answers, score, total) {
+    console.log('Attempting to save to Google Sheets');
     const timestamp = new Date().toLocaleString();
     const rowData = [
         timestamp,
@@ -48,6 +54,8 @@ function saveToGoogleSheets(name, answers, score, total) {
         `${score} / ${total}`
     ];
 
+    console.log('Row data prepared:', rowData);
+
     // Using Google Sheets API
     gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: SPREADSHEET_ID,
@@ -57,7 +65,7 @@ function saveToGoogleSheets(name, answers, score, total) {
             values: [rowData]
         }
     }).then(function(response) {
-        console.log('Data saved successfully');
+        console.log('Data saved successfully:', response);
     }).catch(function(error) {
         console.error('Error saving data:', error);
         alert('Error saving data to Google Sheets. Please try again.');
@@ -78,12 +86,13 @@ document.getElementById('resultPopup').addEventListener('click', function(e) {
 
 // Initialize Google Sheets API
 function initClient() {
+    console.log('Initializing Google Sheets API');
     gapi.client.init({
-        apiKey: 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I', // You'll need to replace this with your actual API key
+        apiKey: 'AIzaSyBxXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXh', // Replace with your actual API key
         discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
         scope: 'https://www.googleapis.com/auth/spreadsheets'
     }).then(function() {
-        console.log('Google Sheets API initialized');
+        console.log('Google Sheets API initialized successfully');
     }).catch(function(error) {
         console.error('Error initializing Google Sheets API:', error);
     });
