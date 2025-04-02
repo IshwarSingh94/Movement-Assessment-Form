@@ -120,5 +120,21 @@
     
     <!-- Load our custom script -->
     <script src="script.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add form submit handler
+        const form = document.getElementById('assessmentForm');
+        if (form) {
+            form.addEventListener('submit', submitQuiz);
+        }
+        // ... other event listeners
+    });
+
+    function submitQuiz(event) {
+        event.preventDefault(); // Prevent form from submitting normally
+        // ... rest of the code
+    }
+    </script>
 </body>
 </html> 
