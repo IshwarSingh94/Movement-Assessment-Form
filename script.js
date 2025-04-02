@@ -1,8 +1,8 @@
 // Google Sheets API configuration
 const SPREADSHEET_ID = '1QCUTnTy5hJ96uD8VSUauO44P5FcwNp9xYb1yTfK-BWA';
 const SHEET_NAME = 'NewAssessment';
-const CLIENT_ID = 'YOUR_CLIENT_ID'; // You'll need to replace this with your OAuth 2.0 Client ID
-const API_KEY = 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I'; // Your API key
+const CLIENT_ID = '1023590062256-rcuj8srgfl08fm0pasobv750v3696n7s.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I';
 
 let isApiInitialized = false;
 
@@ -104,9 +104,14 @@ function initClient() {
     }).then(function() {
         console.log('Google Sheets API initialized successfully');
         isApiInitialized = true;
+        // Sign in the user
+        return gapi.auth2.getAuthInstance().signIn();
+    }).then(function() {
+        console.log('User signed in successfully');
     }).catch(function(error) {
         console.error('Error initializing Google Sheets API:', error);
         isApiInitialized = false;
+        alert('Error initializing Google Sheets API. Please check the console for details.');
     });
 }
 
