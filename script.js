@@ -95,7 +95,8 @@
         }
     }
 
-    function submitQuiz() {
+    function submitQuiz(event) {
+        event.preventDefault(); // Prevent form from submitting normally
         console.log('Form submitted');
         
         // Check if user is signed in
@@ -202,8 +203,21 @@
         showStatusMessage('Form reset successfully!');
     }
 
-    // Close popup when clicking outside
+    // Initialize event listeners when the DOM is loaded
     document.addEventListener('DOMContentLoaded', function() {
+        // Add form submit handler
+        const form = document.getElementById('assessmentForm');
+        if (form) {
+            form.addEventListener('submit', submitQuiz);
+        }
+
+        // Add reset button handler
+        const resetBtn = document.getElementById('resetBtn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', resetForm);
+        }
+
+        // Add popup close handler
         const popup = document.getElementById('resultPopup');
         if (popup) {
             popup.addEventListener('click', function(e) {
