@@ -7,6 +7,46 @@ const API_KEY = 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I';
 let isApiInitialized = false;
 let tokenClient;
 
+// Initialize Google Identity Services
+function initializeGoogleIdentity() {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        callback: handleTokenResponse
+    });
+}
+
+// Handle the token response
+function handleTokenResponse(response) {
+    if (response.error !== undefined) {
+        console.error('Error getting token:', response.error);
+        return;
+    }
+    
+    // Save the access token
+    gapi.client.setToken({
+        access_token: response.access_token,
+    });
+    console.log('User authenticated successfully');
+    isApiInitialized = true;
+}
+
+// Initialize Google Sheets API
+function initClient() {
+    console.log('Initializing Google Sheets API');
+    gapi.client.init({
+        apiKey: API_KEY,
+        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
+    }).then(function() {
+        console.log('Google Sheets API initialized successfully');
+        initializeGoogleIdentity();
+    }).catch(function(error) {
+        console.error('Error initializing Google Sheets API:', error);
+        isApiInitialized = false;
+        alert('Error initializing Google Sheets API. Please check the console for details.');
+    });
+}
+
 function submitQuiz() {
     console.log('Form submitted');
     const name = document.getElementById('name').value;
@@ -46,7 +86,7 @@ function submitQuiz() {
         saveToGoogleSheets(name, answers, checkedBoxes, totalCheckboxes);
     } else {
         console.error('Google Sheets API not initialized');
-        alert('Error: Google Sheets API not initialized. Please try again.');
+        alert('Please sign in with Google first.');
     }
 }
 
@@ -76,6 +116,7 @@ function saveToGoogleSheets(name, answers, score, total) {
         }
     }).then(function(response) {
         console.log('Data saved successfully:', response);
+        alert('Assessment saved successfully!');
     }).catch(function(error) {
         console.error('Error saving data:', error);
         alert('Error saving data to Google Sheets. Please try again.');
@@ -94,59 +135,18 @@ document.getElementById('resultPopup').addEventListener('click', function(e) {
     }
 });
 
-// Initialize Google Sheets API
-function initClient() {
-    console.log('Initializing Google Sheets API');
-    gapi.client.init({
-        apiKey: API_KEY,
-        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
-    }).then(function() {
-        console.log('Google Sheets API initialized successfully');
-        isApiInitialized = true;
-    }).catch(function(error) {
-        console.error('Error initializing Google Sheets API:', error);
-        isApiInitialized = false;
-        alert('Error initializing Google Sheets API. Please check the console for details.');
-    });
-}
-
-// Initialize Google Identity Services
-function initializeGoogleIdentity() {
-    tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/spreadsheets',
-        callback: '', // defined later
-    });
-}
-
 // Load the Google Sheets API
 gapi.load('client', initClient);
 
 // Initialize Google Identity Services
 google.accounts.id.initialize({
     client_id: CLIENT_ID,
-    callback: handleCredentialResponse
-});
-
-// Handle the credential response
-function handleCredentialResponse(response) {
-    if (response.credential) {
-        // Set the access token
-        tokenClient.callback = async (resp) => {
-            if (resp.error !== undefined) {
-                throw resp;
-            }
-            // Save the access token
-            gapi.client.setToken({
-                access_token: resp.access_token,
-            });
-            console.log('User authenticated successfully');
-        };
-
-        // Trigger the token client
-        tokenClient.requestAccessToken();
+    callback: function(response) {
+        if (response.credential) {
+            tokenClient.requestAccessToken();
+        }
     }
-}
+});
 
 // Render the Google Sign-In button
 google.accounts.id.renderButton(
