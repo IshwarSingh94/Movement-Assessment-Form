@@ -5,8 +5,6 @@
     const API_KEY = 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I';
 
     let isApiInitialized = false;
-    let tokenClient;
-    let isSignInInProgress = false;
 
     // Show status message to user
     function showStatusMessage(message, isError = false) {
@@ -20,78 +18,44 @@
         }, 5000);
     }
 
-    // Initialize Google Identity Services
-    function initializeGoogleIdentity() {
-        try {
-            tokenClient = google.accounts.oauth2.initTokenClient({
-                client_id: CLIENT_ID,
-                scope: 'https://www.googleapis.com/auth/spreadsheets',
-                callback: handleTokenResponse
+    // Handle the credential response from Google Sign-In
+    function handleCredentialResponse(response) {
+        console.log('Credential response received:', response);
+        
+        if (response.credential) {
+            // Initialize Google Sheets API
+            gapi.load('client', function() {
+                gapi.client.init({
+                    apiKey: API_KEY,
+                    discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
+                }).then(function() {
+                    console.log('Google Sheets API initialized successfully');
+                    
+                    // Get access token from credential
+                    const credential = response.credential;
+                    const token = credential.access_token;
+                    
+                    if (token) {
+                        // Set the access token
+                        gapi.client.setToken({
+                            access_token: token,
+                        });
+                        console.log('User authenticated successfully');
+                        isApiInitialized = true;
+                        showStatusMessage('Successfully signed in with Google!');
+                    } else {
+                        console.error('No access token in credential');
+                        showStatusMessage('Error signing in with Google. Please try again.', true);
+                    }
+                }).catch(function(error) {
+                    console.error('Error initializing Google Sheets API:', error);
+                    isApiInitialized = false;
+                    showStatusMessage('Error initializing Google Sheets API. Please refresh the page.', true);
+                });
             });
-            console.log('Google Identity Services initialized successfully');
-        } catch (error) {
-            console.error('Error initializing Google Identity Services:', error);
-            showStatusMessage('Error initializing Google Sign-In. Please refresh the page.', true);
-        }
-    }
-
-    // Handle the token response
-    function handleTokenResponse(response) {
-        if (response.error !== undefined) {
-            console.error('Error getting token:', response.error);
+        } else {
+            console.error('No credential received from Google Sign-In');
             showStatusMessage('Error signing in with Google. Please try again.', true);
-            isSignInInProgress = false;
-            return;
-        }
-        
-        try {
-            // Save the access token
-            gapi.client.setToken({
-                access_token: response.access_token,
-            });
-            console.log('User authenticated successfully');
-            isApiInitialized = true;
-            isSignInInProgress = false;
-            showStatusMessage('Successfully signed in with Google!');
-        } catch (error) {
-            console.error('Error setting access token:', error);
-            showStatusMessage('Error completing sign-in. Please try again.', true);
-            isSignInInProgress = false;
-        }
-    }
-
-    // Initialize Google Sheets API
-    function initClient() {
-        console.log('Initializing Google Sheets API');
-        gapi.client.init({
-            apiKey: API_KEY,
-            discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
-        }).then(function() {
-            console.log('Google Sheets API initialized successfully');
-            initializeGoogleIdentity();
-        }).catch(function(error) {
-            console.error('Error initializing Google Sheets API:', error);
-            isApiInitialized = false;
-            showStatusMessage('Error initializing Google Sheets API. Please refresh the page.', true);
-        });
-    }
-
-    // Handle Google Sign-In
-    function handleGoogleSignIn() {
-        if (isSignInInProgress) {
-            showStatusMessage('Sign-in already in progress. Please wait...');
-            return;
-        }
-
-        isSignInInProgress = true;
-        showStatusMessage('Initiating Google Sign-In...');
-        
-        try {
-            tokenClient.requestAccessToken();
-        } catch (error) {
-            console.error('Error requesting access token:', error);
-            showStatusMessage('Error starting sign-in process. Please try again.', true);
-            isSignInInProgress = false;
         }
     }
 
@@ -251,10 +215,4 @@
         } else {
             console.error('Popup not found!');
         }
-    });
-
-    // Load the Google Sheets API
-    gapi.load('client', initClient);
-
-    // Initialize Google Identity Services - REMOVED DUPLICATE INITIALIZATION
-    // The button is already rendered in the HTML with the google-signin-client_id meta tag 
+    }); 
