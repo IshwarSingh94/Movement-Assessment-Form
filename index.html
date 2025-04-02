@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id" content="1023590062256-rcuj8srgfl08fm0pasobv750v3696n7s.apps.googleusercontent.com">
     <title>Physical Assessment Quiz</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -16,7 +15,19 @@
         </header>
 
         <div class="google-sign-in" role="region" aria-label="Google Sign In">
-            <div id="googleSignInDiv"></div>
+            <div id="g_id_onload"
+                 data-client_id="1023590062256-rcuj8srgfl08fm0pasobv750v3696n7s.apps.googleusercontent.com"
+                 data-callback="handleCredentialResponse"
+                 data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-size="large"
+                 data-theme="outline"
+                 data-text="signin_with"
+                 data-shape="rectangular"
+                 data-logo_alignment="left">
+            </div>
         </div>
 
         <form class="form-container" id="assessmentForm" novalidate>
