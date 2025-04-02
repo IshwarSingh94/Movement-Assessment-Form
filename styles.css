@@ -148,30 +148,6 @@ input[type="checkbox"] {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.success-message {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--accent-color);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideIn 0.3s ease-out;
-    z-index: 1000;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
 /* Popup Styles */
 .popup {
     display: none;
@@ -258,6 +234,39 @@ input[type="checkbox"] {
     transform: translateY(-2px);
 }
 
+/* Status Messages */
+.status-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease-out;
+    z-index: 1000;
+    font-weight: 500;
+    max-width: 300px;
+    text-align: center;
+}
+
+.status-message.success {
+    background: var(--accent-color);
+    color: white;
+}
+
+.status-message.error {
+    background: var(--error-color);
+    color: white;
+}
+
+/* Google Sign-In */
+.google-sign-in {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -265,11 +274,11 @@ input[type="checkbox"] {
 
 @keyframes slideIn {
     from {
-        transform: translateY(-20px);
+        transform: translateX(100%);
         opacity: 0;
     }
     to {
-        transform: translateY(0);
+        transform: translateX(0);
         opacity: 1;
     }
 }
@@ -308,46 +317,5 @@ input[type="checkbox"] {
 
     .submit-btn, .reset-btn {
         width: 100%;
-    }
-}
-
-.google-sign-in {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-}
-
-.status-message {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 12px 24px;
-    border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideIn 0.3s ease-out;
-    z-index: 1000;
-    font-weight: 500;
-    max-width: 300px;
-    text-align: center;
-}
-
-.status-message.success {
-    background: var(--accent-color);
-    color: white;
-}
-
-.status-message.error {
-    background: var(--error-color);
-    color: white;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
     }
 } 
