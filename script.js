@@ -5,6 +5,7 @@ const CLIENT_ID = '1023590062256-rcuj8srgfl08fm0pasobv750v3696n7s.apps.googleuse
 const API_KEY = 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I';
 
 let isApiInitialized = false;
+let tokenClient;
 
 function submitQuiz() {
     console.log('Form submitted');
@@ -98,16 +99,10 @@ function initClient() {
     console.log('Initializing Google Sheets API');
     gapi.client.init({
         apiKey: API_KEY,
-        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-        clientId: CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/spreadsheets'
+        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
     }).then(function() {
         console.log('Google Sheets API initialized successfully');
         isApiInitialized = true;
-        // Sign in the user
-        return gapi.auth2.getAuthInstance().signIn();
-    }).then(function() {
-        console.log('User signed in successfully');
     }).catch(function(error) {
         console.error('Error initializing Google Sheets API:', error);
         isApiInitialized = false;
@@ -115,5 +110,46 @@ function initClient() {
     });
 }
 
+// Initialize Google Identity Services
+function initializeGoogleIdentity() {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        callback: '', // defined later
+    });
+}
+
 // Load the Google Sheets API
-gapi.load('client:auth2', initClient); 
+gapi.load('client', initClient);
+
+// Initialize Google Identity Services
+google.accounts.id.initialize({
+    client_id: CLIENT_ID,
+    callback: handleCredentialResponse
+});
+
+// Handle the credential response
+function handleCredentialResponse(response) {
+    if (response.credential) {
+        // Set the access token
+        tokenClient.callback = async (resp) => {
+            if (resp.error !== undefined) {
+                throw resp;
+            }
+            // Save the access token
+            gapi.client.setToken({
+                access_token: resp.access_token,
+            });
+            console.log('User authenticated successfully');
+        };
+
+        // Trigger the token client
+        tokenClient.requestAccessToken();
+    }
+}
+
+// Render the Google Sign-In button
+google.accounts.id.renderButton(
+    document.getElementById('googleSignInDiv'),
+    { theme: 'outline', size: 'large' }
+); 
