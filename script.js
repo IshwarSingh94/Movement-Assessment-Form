@@ -79,7 +79,7 @@ document.getElementById('resultPopup').addEventListener('click', function(e) {
 // Initialize Google Sheets API
 function initClient() {
     gapi.client.init({
-        apiKey: 'YOUR_API_KEY', // You'll need to replace this with your actual API key
+        apiKey: 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I', // You'll need to replace this with your actual API key
         discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
         scope: 'https://www.googleapis.com/auth/spreadsheets'
     }).then(function() {
