@@ -96,7 +96,9 @@
     }
 
     function submitQuiz(event) {
-        event.preventDefault(); // Prevent form from submitting normally
+        if (event) {
+            event.preventDefault(); // Prevent form from submitting normally
+        }
         console.log('Form submitted');
         
         // Check if user is signed in
@@ -205,26 +207,49 @@
 
     // Initialize event listeners when the DOM is loaded
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, setting up event listeners');
+        
         // Add form submit handler
         const form = document.getElementById('assessmentForm');
         if (form) {
+            console.log('Form found, adding submit event listener');
             form.addEventListener('submit', submitQuiz);
+        } else {
+            console.error('Form not found!');
+        }
+
+        // Add submit button click handler as a backup
+        const submitBtn = document.getElementById('submitBtn');
+        if (submitBtn) {
+            console.log('Submit button found, adding click event listener');
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                submitQuiz();
+            });
+        } else {
+            console.error('Submit button not found!');
         }
 
         // Add reset button handler
         const resetBtn = document.getElementById('resetBtn');
         if (resetBtn) {
+            console.log('Reset button found, adding click event listener');
             resetBtn.addEventListener('click', resetForm);
+        } else {
+            console.error('Reset button not found!');
         }
 
         // Add popup close handler
         const popup = document.getElementById('resultPopup');
         if (popup) {
+            console.log('Popup found, adding click event listener');
             popup.addEventListener('click', function(e) {
                 if (e.target === this) {
                     closePopup();
                 }
             });
+        } else {
+            console.error('Popup not found!');
         }
     });
 
