@@ -49,6 +49,13 @@ function initClient() {
 
 function submitQuiz() {
     console.log('Form submitted');
+    
+    // Check if user is signed in
+    if (!isApiInitialized) {
+        alert('Please sign in with Google first to submit your assessment.');
+        return;
+    }
+
     const name = document.getElementById('name').value;
     if (!name) {
         alert("Please enter your name.");
@@ -82,12 +89,7 @@ function submitQuiz() {
     popup.style.display = 'flex';
     
     // Save to Google Sheets
-    if (isApiInitialized) {
-        saveToGoogleSheets(name, answers, checkedBoxes, totalCheckboxes);
-    } else {
-        console.error('Google Sheets API not initialized');
-        alert('Please sign in with Google first.');
-    }
+    saveToGoogleSheets(name, answers, checkedBoxes, totalCheckboxes);
 }
 
 function saveToGoogleSheets(name, answers, score, total) {
