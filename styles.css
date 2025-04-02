@@ -7,6 +7,9 @@
     --border-radius: 8px;
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --error-color: #dc3545;
+    --success-color: #28a745;
+    --border-color: #ddd;
+    --hover-color: #f8f9fa;
 }
 
 * {
@@ -30,53 +33,57 @@ body {
 
 .container {
     background: white;
-    padding: 30px;
+    padding: 20px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     max-width: 600px;
     width: 100%;
-    margin: 20px auto;
+    margin: 10px auto;
     position: relative;
     z-index: 1;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .header i {
     font-size: 2.5em;
     color: var(--primary-color);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
-h2 {
+h1 {
     text-align: center;
     color: var(--secondary-color);
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-size: 2em;
 }
 
-h3 {
+h2 {
     color: var(--primary-color);
-    margin: 25px 0 15px;
+    margin: 15px 0 10px;
     font-size: 1.3em;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 6px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
-h3 i {
+h2 i {
     font-size: 1.2em;
+}
+
+.form-group {
+    margin-bottom: 15px;
 }
 
 label {
     display: block;
-    margin: 12px 0;
-    padding: 12px;
+    margin: 4px 0;
+    padding: 6px;
     border-radius: var(--border-radius);
     transition: all 0.3s ease;
     cursor: pointer;
@@ -84,18 +91,18 @@ label {
 }
 
 label:hover {
-    background-color: #f8f9fa;
+    background-color: var(--hover-color);
     border-color: var(--primary-color);
     transform: translateX(5px);
 }
 
 input[type="text"] {
     width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
+    padding: 8px;
+    border: 2px solid var(--border-color);
     border-radius: var(--border-radius);
     font-size: 1em;
-    margin: 5px 0;
+    margin: 2px 0;
     transition: all 0.3s ease;
 }
 
@@ -113,11 +120,67 @@ input[type="checkbox"] {
     accent-color: var(--primary-color);
 }
 
+.assessment-section {
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.assessment-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.assessment-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.assessment-section h2 i {
+    font-size: 1.1rem;
+    color: var(--accent-color);
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease;
+    margin: 2px 0;
+}
+
+.checkbox-group label:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--accent-color);
+}
+
 .button-group {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .submit-btn, .reset-btn {
@@ -218,7 +281,7 @@ input[type="checkbox"] {
     text-align: center;
 }
 
-.popup-footer button {
+.close-btn {
     width: auto;
     padding: 10px 30px;
     background-color: var(--accent-color);
@@ -229,7 +292,7 @@ input[type="checkbox"] {
     transition: all 0.3s ease;
 }
 
-.popup-footer button:hover {
+.close-btn:hover {
     background-color: #c0392b;
     transform: translateY(-2px);
 }
@@ -250,7 +313,7 @@ input[type="checkbox"] {
 }
 
 .status-message.success {
-    background: var(--accent-color);
+    background: var(--success-color);
     color: white;
 }
 
@@ -289,12 +352,16 @@ input[type="checkbox"] {
         padding: 20px;
     }
     
-    h2 {
+    h1 {
         font-size: 1.8em;
     }
     
-    h3 {
+    h2 {
         font-size: 1.2em;
+    }
+
+    .assessment-section {
+        padding: 15px;
     }
 
     .popup-content {
@@ -317,5 +384,23 @@ input[type="checkbox"] {
 
     .submit-btn, .reset-btn {
         width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .assessment-section {
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .assessment-section h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .checkbox-group label {
+        padding: 0.25rem;
+        font-size: 0.9rem;
+        margin: 1px 0;
     }
 } 
