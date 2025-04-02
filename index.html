@@ -9,76 +9,105 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <i class="fas fa-clipboard-check"></i>
-            <h2>Physical Assessment Quiz</h2>
-        </div>
+    <main class="container">
+        <header class="header">
+            <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+            <h1>Physical Assessment Quiz</h1>
+        </header>
 
-        <div class="google-sign-in">
+        <div class="google-sign-in" role="region" aria-label="Google Sign In">
             <div id="googleSignInDiv"></div>
         </div>
 
-        <div class="form-container">
-            <label for="name">Name:</label>
-            <input type="text" id="name" required>
+        <form class="form-container" id="assessmentForm" novalidate>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your name">
+            </div>
 
-            <h3><i class="fas fa-dumbbell"></i> Squat</h3>
-            <label><input type="checkbox" name="squat" value="Knees track toes"> Hips back and down</label>
-            <label><input type="checkbox" name="squat" value="Hip crease below knee"> Weight on heels</label>
-            <label><input type="checkbox" name="squat" value="Vertical torso"> Knees track over toes</label>
-            <label><input type="checkbox" name="squat" value="Elbows close to the ribseet flat"> Hips below knee level</label>
-            <label><input type="checkbox" name="squat" value="Knees out"> Neutral spine</label>
+            <section class="assessment-section">
+                <h2><i class="fas fa-dumbbell" aria-hidden="true"></i> Squat</h2>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="squat" value="Hips back and down"> Hips back and down</label>
+                    <label><input type="checkbox" name="squat" value="Weight on heels"> Weight on heels</label>
+                    <label><input type="checkbox" name="squat" value="Knees track over toes"> Knees track over toes</label>
+                    <label><input type="checkbox" name="squat" value="Hips below knee level"> Hips below knee level</label>
+                    <label><input type="checkbox" name="squat" value="Neutral spine"> Neutral spine</label>
+                </div>
+            </section>
 
-            <h3><i class="fas fa-running"></iActive shouldersnge</h3>
-            <label><input type="checkbox" name="hinge" value="Hips move back first"> Hips move back first</label>
-            <label><input type="checkbox" name="hinge" value="Movement initiated with Elbowsip hinge"> Weight on mid-foot</label>
-            <label><input type="checkbox" name="hinge" value="Knees soft"> Weight on mid footd shoulders rise simultaneously</label>
-            <label><input type="checkbox" name="hinge" value="Feet flat"> Neutral SpineElbows close to the ribsbel>
-            <label><input type="checkbox" name="hinge" value="Weight in heels"> Active shoulders</label>
+            <section class="assessment-section">
+                <h2><i class="fas fa-running" aria-hidden="true"></i> Hinge</h2>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="hinge" value="Hips move back first"> Hips move back first</label>
+                    <label><input type="checkbox" name="hinge" value="Weight on mid-foot"> Weight on mid-foot</label>
+                    <label><input type="checkbox" name="hinge" value="Hips and shoulders rise simultaneously"> Hips and shoulders rise simultaneously</label>
+                    <label><input type="checkbox" name="hinge" value="Neutral Spine"> Neutral Spine</label>
+                    <label><input type="checkbox" name="hinge" value="Active shoulders"> Active shoulders</label>
+                </div>
+            </section>
 
-            <h3><i class="fas fa-hand-paper"></i> Push</h3>
-            <label><input type="checkbox" name="push" value="Elbows in"> Active shoulders</label>
-            <label><input type="checkbox" name="push" value="Full range"> Neutral Spine</label>
-            <label><input type="checkbox" name="push" value="Core tight"> Movement initiated with Elbows</label>
-            <label><input type="checkbox" name="push" value="Shoulders down"> Hips and shoulders rise together</label>
-            <label><input type="checkbox" name="push" value="Wrists straight"> Elbows close to the ribs</label>
+            <section class="assessment-section">
+                <h2><i class="fas fa-hand-paper" aria-hidden="true"></i> Push</h2>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="push" value="Active shoulders"> Active shoulders</label>
+                    <label><input type="checkbox" name="push" value="Neutral Spine"> Neutral Spine</label>
+                    <label><input type="checkbox" name="push" value="Movement initiated with Elbows"> Movement initiated with Elbows</label>
+                    <label><input type="checkbox" name="push" value="Hips and shoulders rise together"> Hips and shoulders rise together</label>
+                    <label><input type="checkbox" name="push" value="Elbows close to the ribs"> Elbows close to the ribs</label>
+                </div>
+            </section>
 
-            <h3><i class="fas fa-hand-paper"></i> Pull</h3>
-            <label><input type="checkbox" name="pull" value="Elbows in"> Active shoulders</label>
-            <label><input type="checkbox" name="pull" value="Full range"> Neutral spine</label>
-            <label><input type="checkbox" name="pull" value="Core tight"> Movement initiated with Elbows</label>
-            <label><input type="checkbox" name="pull" value="Shoulders down"> Weight on mid foot</label>
-            <label><input type="checkbox" name="pull" value="Wrists straight"> Elbows close to the ribs</label>
+            <section class="assessment-section">
+                <h2><i class="fas fa-hand-paper" aria-hidden="true"></i> Pull</h2>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="pull" value="Active shoulders"> Active shoulders</label>
+                    <label><input type="checkbox" name="pull" value="Neutral spine"> Neutral spine</label>
+                    <label><input type="checkbox" name="pull" value="Movement initiated with Elbows"> Movement initiated with Elbows</label>
+                    <label><input type="checkbox" name="pull" value="Weight on mid foot"> Weight on mid foot</label>
+                    <label><input type="checkbox" name="pull" value="Elbows close to the ribs"> Elbows close to the ribs</label>
+                </div>
+            </section>
 
-            <h3><i class="fas fa-running"></i> Single Leg</h3>
-            <label><input type="checkbox" name="single_leg" value="Hip level"> Weight on heels</label>
-            <label><input type="checkbox" name="single_leg" value="Knee stable"> Knees track over toes</label>
-            <label><input type="checkbox" name="single_leg" value="Vertical torso"> Neutral Spine</label>
-            <label><input type="checkbox" name="single_leg" value="Vertical torso"> Knees aligned over or behind the toes</label>
-            <label><input type="checkbox" name="single_leg" value="Vertical torso"> Vertical torso</label>
+            <section class="assessment-section">
+                <h2><i class="fas fa-running" aria-hidden="true"></i> Single Leg</h2>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="single_leg" value="Weight on heels"> Weight on heels</label>
+                    <label><input type="checkbox" name="single_leg" value="Knees track over toes"> Knees track over toes</label>
+                    <label><input type="checkbox" name="single_leg" value="Neutral Spine"> Neutral Spine</label>
+                    <label><input type="checkbox" name="single_leg" value="Knees aligned over or behind the toes"> Knees aligned over or behind the toes</label>
+                    <label><input type="checkbox" name="single_leg" value="Vertical torso"> Vertical torso</label>
+                </div>
+            </section>
             
             <div class="button-group">
-                <button type="button" onclick="submitQuiz()" class="submit-btn">Submit Assessment</button>
-                <button type="button" onclick="resetForm()" class="reset-btn">Reset Form</button>
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                    Submit Assessment
+                </button>
+                <button type="button" class="reset-btn" id="resetBtn">
+                    <i class="fas fa-undo" aria-hidden="true"></i>
+                    Reset Form
+                </button>
             </div>
-        </div>
-    </div>
+        </form>
+    </main>
 
-    <div id="resultPopup" class="popup">
+    <div id="resultPopup" class="popup" role="dialog" aria-labelledby="resultTitle" aria-modal="true">
         <div class="popup-content">
             <div class="popup-header">
-                <i class="fas fa-trophy"></i>
-                <h3 id="result"></h3>
+                <i class="fas fa-trophy" aria-hidden="true"></i>
+                <h2 id="resultTitle">Assessment Results</h2>
             </div>
             <div class="popup-body">
+                <p id="result"></p>
                 <div class="score-circle">
                     <div class="score-number" id="scoreNumber"></div>
                     <div class="score-label">out of 25</div>
                 </div>
             </div>
             <div class="popup-footer">
-                <button onclick="closePopup()">Close</button>
+                <button onclick="closePopup()" class="close-btn">Close</button>
             </div>
         </div>
     </div>
