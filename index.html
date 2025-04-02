@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; frame-src https://accounts.google.com;">
     <title>Physical Assessment Quiz</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -19,6 +20,9 @@
                  data-client_id="1023590062256-rcuj8srgfl08fm0pasobv750v3696n7s.apps.googleusercontent.com"
                  data-callback="handleCredentialResponse"
                  data-auto_prompt="false"
+                 data-context="signin"
+                 data-ux_mode="popup"
+                 data-login_uri="https://localhost:3000"
                  data-scope="https://www.googleapis.com/auth/spreadsheets">
             </div>
             <div class="g_id_signin"
