@@ -5,6 +5,7 @@
     const API_KEY = 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I';
 
     let isApiInitialized = false;
+    let tokenClient;
 
     // Show status message to user
     function showStatusMessage(message, isError = false) {
@@ -48,17 +49,26 @@
             // Initialize Google API client
             await initializeGoogleApi();
             
-            // Get the ID token
-            const idToken = response.credential;
-            
-            // Set the token
-            gapi.client.setToken({
-                access_token: idToken
+            // Initialize the token client
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: 'https://www.googleapis.com/auth/spreadsheets',
+                callback: (tokenResponse) => {
+                    if (tokenResponse.access_token) {
+                        gapi.client.setToken({
+                            access_token: tokenResponse.access_token
+                        });
+                        console.log('User authenticated successfully');
+                        isApiInitialized = true;
+                        showStatusMessage('Successfully signed in with Google!');
+                    } else {
+                        throw new Error('No access token received');
+                    }
+                },
             });
-            
-            console.log('User authenticated successfully');
-            isApiInitialized = true;
-            showStatusMessage('Successfully signed in with Google!');
+
+            // Request access token
+            tokenClient.requestAccessToken();
             
         } catch (error) {
             console.error('Error during authentication:', error);
