@@ -126,16 +126,23 @@
             scorePercentage.innerText = `${percentage}%`;
             
             // Update movement scores and percentages
-            const movements = ['squat', 'hinge', 'push', 'pull', 'single_leg'];
+            const movements = [
+                { key: 'squat', id: 'squat' },
+                { key: 'hinge', id: 'hinge' },
+                { key: 'push', id: 'push' },
+                { key: 'pull', id: 'pull' },
+                { key: 'single_leg', id: 'singleLeg' }
+            ];
+            
             movements.forEach(movement => {
-                const score = movementScores[movement];
+                const score = movementScores[movement.key];
                 const movementPercentage = Math.round((score / 5) * 100);
                 
                 // Update score
-                document.getElementById(`${movement}Score`).textContent = `${score}/5`;
+                document.getElementById(`${movement.id}Score`).textContent = `${score}/5`;
                 
                 // Update percentage
-                document.getElementById(`${movement}Percentage`).textContent = `${movementPercentage}%`;
+                document.getElementById(`${movement.id}Percentage`).textContent = `${movementPercentage}%`;
             });
             
             popup.style.display = 'flex';
