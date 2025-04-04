@@ -5,7 +5,6 @@
     const API_KEY = 'AIzaSyAK2NPy4CLM4aBjBu64xU8R3uPXl7bV33I';
 
     let isApiInitialized = false;
-    let tokenClient;
 
     // Show status message to user
     function showStatusMessage(message, isError = false) {
@@ -52,26 +51,14 @@
             // Get the ID token
             const idToken = response.credential;
             
-            // Set up token client
-            tokenClient = google.accounts.oauth2.initTokenClient({
-                client_id: CLIENT_ID,
-                scope: 'https://www.googleapis.com/auth/spreadsheets',
-                callback: (tokenResponse) => {
-                    if (tokenResponse.access_token) {
-                        gapi.client.setToken({
-                            access_token: tokenResponse.access_token
-                        });
-                        console.log('User authenticated successfully');
-                        isApiInitialized = true;
-                        showStatusMessage('Successfully signed in with Google!');
-                    } else {
-                        throw new Error('No access token received');
-                    }
-                },
+            // Set the token
+            gapi.client.setToken({
+                access_token: idToken
             });
-
-            // Request access token
-            tokenClient.requestAccessToken();
+            
+            console.log('User authenticated successfully');
+            isApiInitialized = true;
+            showStatusMessage('Successfully signed in with Google!');
             
         } catch (error) {
             console.error('Error during authentication:', error);
@@ -236,4 +223,33 @@
         const submitBtn = document.getElementById('submitBtn');
         if (submitBtn) {
             console.log('Submit button found, adding click event listener');
-        
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                submitQuiz();
+            });
+        } else {
+            console.error('Submit button not found!');
+        }
+
+        // Add reset button handler
+        const resetBtn = document.getElementById('resetBtn');
+        if (resetBtn) {
+            console.log('Reset button found, adding click event listener');
+            resetBtn.addEventListener('click', resetForm);
+        } else {
+            console.error('Reset button not found!');
+        }
+
+        // Add popup close handler
+        const popup = document.getElementById('resultPopup');
+        if (popup) {
+            console.log('Popup found, adding click event listener');
+            popup.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePopup();
+                }
+            });
+        } else {
+            console.error('Popup not found!');
+        }
+    });
