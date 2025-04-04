@@ -257,24 +257,99 @@ input[type="checkbox"] {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color), #357abd);
-    margin: 20px auto;
+    background: var(--primary-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 20px auto;
     color: white;
-    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .score-number {
-    font-size: 2.5em;
+    font-size: 3rem;
     font-weight: bold;
+    line-height: 1;
 }
 
 .score-label {
-    font-size: 1.1em;
-    opacity: 0.9;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.score-percentage {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 5px;
+    color: var(--accent-color);
+}
+
+.score-breakdown {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.score-breakdown h3 {
+    margin: 0 0 15px 0;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.breakdown-table th,
+.breakdown-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.breakdown-table th {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.breakdown-table th:first-child {
+    border-top-left-radius: var(--border-radius);
+}
+
+.breakdown-table th:last-child {
+    border-top-right-radius: var(--border-radius);
+}
+
+.breakdown-table tr:last-child td {
+    border-bottom: none;
+}
+
+.breakdown-table td:first-child {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.breakdown-table td:nth-child(2),
+.breakdown-table td:nth-child(3) {
+    text-align: center;
+    font-weight: bold;
+}
+
+.breakdown-table td:nth-child(2) {
+    color: var(--primary-color);
+}
+
+.breakdown-table td:nth-child(3) {
+    color: var(--accent-color);
 }
 
 .popup-footer {
@@ -402,5 +477,31 @@ input[type="checkbox"] {
         padding: 0.25rem;
         font-size: 0.9rem;
         margin: 1px 0;
+    }
+
+    .score-circle {
+        width: 120px;
+        height: 120px;
+    }
+
+    .score-number {
+        font-size: 2.5rem;
+    }
+
+    .score-label {
+        font-size: 0.9rem;
+    }
+
+    .score-percentage {
+        font-size: 1rem;
+    }
+
+    .breakdown-table {
+        font-size: 0.9rem;
+    }
+
+    .breakdown-table th,
+    .breakdown-table td {
+        padding: 8px;
     }
 } 
