@@ -8,7 +8,7 @@
     --box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
     --error-color: #ff3860;
     --success-color: #00ff9d;
-    --border-color: rgba(0, 255, 255, 0.4); /* Enhanced border color opacity */
+    --border-color: rgba(0, 255, 255, 0.2);
     --hover-color: rgba(0, 255, 255, 0.1);
 }
 
@@ -62,27 +62,6 @@ body::before {
     z-index: 1;
     border: 1px solid var(--border-color);
     overflow: hidden;
-    /* Add moving border animation to container */
-    position: relative;
-}
-
-/* Enhanced moving border for container */
-.container::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: transparent;
-    border-radius: var(--border-radius);
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0.7; /* Always visible border animation */
-    pointer-events: none;
-    z-index: -1;
 }
 
 /* Glass shine effect */
@@ -163,29 +142,6 @@ label:hover {
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
-/* Add moving border to labels */
-label::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: var(--border-radius);
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: -1;
-}
-
-label:hover::after {
-    opacity: 0.8;
-}
-
 input[type="text"] {
     width: 100%;
     padding: 12px;
@@ -196,36 +152,12 @@ input[type="text"] {
     margin: 4px 0;
     transition: all 0.3s ease;
     color: white;
-    position: relative;
 }
 
 input[type="text"]:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-}
-
-/* Add moving border to text input */
-input[type="text"]::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: var(--border-radius);
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: -1;
-}
-
-input[type="text"]:focus::after {
-    opacity: 0.8;
 }
 
 input[type="checkbox"] {
@@ -236,7 +168,7 @@ input[type="checkbox"] {
     accent-color: var(--primary-color);
 }
 
-/* Animated assessment sections - always animated now */
+/* Animated assessment sections */
 .assessment-section {
     background: rgba(20, 20, 40, 0.5);
     border-radius: var(--border-radius);
@@ -244,17 +176,12 @@ input[type="checkbox"] {
     margin-bottom: 1.2rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(0, 255, 255, 0.2);
+    border: 1px solid rgba(0, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
-    /* Always elevated by default */
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    /* Add gentle floating animation */
-    animation: floatEffect 4s ease-in-out infinite;
 }
 
-/* Animated border effect - always visible now */
+/* Animated border effect */
 .assessment-section::after {
     content: '';
     position: absolute;
@@ -268,14 +195,15 @@ input[type="checkbox"] {
     background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
     background-size: 400% 100%;
     animation: borderAnimation 6s linear infinite;
-    opacity: 0.8; /* Always visible now */
+    opacity: 0;
+    transition: opacity 0.3s ease;
     pointer-events: none;
     z-index: -1;
 }
 
-/* Add even more glow on hover */
 .assessment-section:hover {
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 255, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
 .assessment-section:hover::after {
@@ -313,8 +241,7 @@ input[type="checkbox"] {
     transition: all 0.3s ease;
     margin: 2px 0;
     background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    position: relative;
+    border: 1px solid transparent;
 }
 
 .checkbox-group label:hover {
@@ -370,25 +297,6 @@ input[type="checkbox"] {
     text-shadow: 0 0 5px var(--secondary-color);
 }
 
-/* Add moving border to buttons */
-.submit-btn::after, .reset-btn::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: transparent;
-    border-radius: 5px;
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0.5; /* Visible by default */
-    pointer-events: none;
-    z-index: -1;
-}
-
 .submit-btn:hover, .reset-btn:hover {
     transform: translateY(-3px);
 }
@@ -401,10 +309,6 @@ input[type="checkbox"] {
 .reset-btn:hover {
     background: rgba(255, 0, 255, 0.1);
     box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
-}
-
-.submit-btn:hover::after, .reset-btn:hover::after {
-    opacity: 1;
 }
 
 /* Button glow effect */
@@ -445,25 +349,6 @@ input[type="checkbox"] {
     position: relative;
     animation: slideIn 0.3s ease;
     border: 1px solid var(--border-color);
-}
-
-/* Add moving border to popup */
-.popup-content::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: transparent;
-    border-radius: var(--border-radius);
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0.8;
-    pointer-events: none;
-    z-index: -1;
 }
 
 .popup-header {
@@ -507,25 +392,6 @@ input[type="checkbox"] {
     overflow: hidden;
 }
 
-/* Add moving border to score circle */
-.score-circle::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: transparent;
-    border-radius: 50%;
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0.8;
-    pointer-events: none;
-    z-index: -1;
-}
-
 .score-circle::before {
     content: '';
     position: absolute;
@@ -565,26 +431,6 @@ input[type="checkbox"] {
     border-radius: var(--border-radius);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     border: 1px solid var(--border-color);
-    position: relative;
-}
-
-/* Add moving border to score breakdown */
-.score-breakdown::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: transparent;
-    border-radius: var(--border-radius);
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0.7;
-    pointer-events: none;
-    z-index: -1;
 }
 
 .score-breakdown h3 {
@@ -601,26 +447,6 @@ input[type="checkbox"] {
     background: rgba(0, 0, 0, 0.2);
     border-radius: var(--border-radius);
     overflow: hidden;
-    position: relative;
-}
-
-/* Add moving border to table */
-.breakdown-table::after {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    right: -1px;
-    bottom: -1px;
-    background: transparent;
-    border-radius: var(--border-radius);
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0.7;
-    pointer-events: none;
-    z-index: -1;
 }
 
 .breakdown-table th,
@@ -686,36 +512,12 @@ input[type="checkbox"] {
     transition: all 0.3s ease;
     box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
     text-shadow: 0 0 5px var(--accent-color);
-    position: relative;
-}
-
-/* Add moving border to close button */
-.close-btn::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: transparent;
-    border-radius: 5px;
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0.7;
-    pointer-events: none;
-    z-index: -1;
 }
 
 .close-btn:hover {
     background: rgba(255, 255, 0, 0.1);
     box-shadow: 0 0 20px rgba(255, 255, 0, 0.6);
     transform: translateY(-2px);
-}
-
-.close-btn:hover::after {
-    opacity: 1;
 }
 
 /* Status Messages */
@@ -733,26 +535,6 @@ input[type="checkbox"] {
     text-align: center;
     backdrop-filter: blur(5px);
     border: 1px solid;
-    position: relative;
-}
-
-/* Add moving border to status messages */
-.status-message::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: transparent;
-    border-radius: 5px;
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--success-color), var(--primary-color), var(--accent-color), var(--success-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0.7;
-    pointer-events: none;
-    z-index: -1;
 }
 
 .status-message.success {
@@ -771,10 +553,6 @@ input[type="checkbox"] {
     box-shadow: 0 0 15px rgba(255, 56, 96, 0.3);
 }
 
-.status-message.error::after {
-    background-image: linear-gradient(90deg, var(--error-color), var(--primary-color), var(--accent-color), var(--error-color));
-}
-
 /* Google Sign-In */
 .google-sign-in {
     margin: 20px 0;
@@ -784,26 +562,6 @@ input[type="checkbox"] {
     background: rgba(0, 0, 0, 0.2);
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
-    position: relative;
-}
-
-/* Add moving border to google sign-in */
-.google-sign-in::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: transparent;
-    border-radius: var(--border-radius);
-    border: 1px solid transparent;
-    background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-    background-size: 400% 100%;
-    animation: borderAnimation 6s linear infinite;
-    opacity: 0.6;
-    pointer-events: none;
-    z-index: -1;
 }
 
 /* Animations */
@@ -832,13 +590,6 @@ input[type="checkbox"] {
     0% { text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color); }
     50% { text-shadow: 0 0 15px var(--primary-color), 0 0 25px var(--primary-color); }
     100% { text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color); }
-}
-
-/* New floating animation for assessment sections */
-@keyframes floatEffect {
-    0% { transform: translateY(-5px); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(-5px); }
 }
 
 /* Responsive Design */
