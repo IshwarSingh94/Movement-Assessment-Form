@@ -127,12 +127,12 @@
         // Display the score in popup
         const popup = document.getElementById('resultPopup');
         const resultText = document.getElementById('result');
-        const scoreNumber = document.getElementById('scoreNumber'+'/25');
+        const scoreNumber = document.getElementById('scoreNumber');
         const scorePercentage = document.getElementById('scorePercentage');
         
         if (resultText && scoreNumber && popup) {
             resultText.innerText = `${name}, your assessment results:`;
-            scoreNumber.innerText = checkedBoxes;
+            scoreNumber.innerText = `${checkedBoxes}/25`;
             scorePercentage.innerText = `${percentage}%`;
             
             // Update movement scores and percentages
