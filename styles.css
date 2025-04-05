@@ -207,6 +207,7 @@ input[type="checkbox"] {
     transition: opacity 0.3s ease;
     pointer-events: none;
     z-index: -1;
+    transform: translateY(-5px);
 }
 
 .assessment-section:hover {
@@ -214,8 +215,8 @@ input[type="checkbox"] {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-.assessment-section:hover::before {
-    opacity: 0.2;
+.assessment-section:hover::after {
+    opacity: 0.3;
 }
 
 .assessment-section h2 {
