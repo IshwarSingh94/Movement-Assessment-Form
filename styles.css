@@ -413,7 +413,7 @@ input[type="checkbox"] {
 }
 
 .score-number {
-    font-size: 3rem;
+    font-size: 1rem;
     font-weight: bold;
     line-height: 1;
     color: white;
@@ -426,7 +426,7 @@ input[type="checkbox"] {
 }
 
 .score-percentage {
-    font-size: 1.2rem;
+    font-size: 3rem;
     font-weight: bold;
     margin-top: 5px;
     color: var(--accent-color);
