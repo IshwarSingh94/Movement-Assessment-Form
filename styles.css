@@ -215,7 +215,7 @@ input[type="checkbox"] {
 }
 
 .assessment-section:hover::after {
-    opacity: 1;
+    opacity: 0.5;
 }
 
 .assessment-section h2 {
