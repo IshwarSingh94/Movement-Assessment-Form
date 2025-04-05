@@ -214,8 +214,8 @@ input[type="checkbox"] {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-.assessment-section:hover::after {
-    opacity: 0.5;
+.assessment-section:hover::before {
+    opacity: 0.2;
 }
 
 .assessment-section h2 {
