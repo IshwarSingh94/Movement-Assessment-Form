@@ -52,8 +52,9 @@ body::before {
 img {
     width: 150px;
     height: 60px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    margin-top: 10px;
 }
 
 .container {
