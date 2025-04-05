@@ -127,7 +127,7 @@
         // Display the score in popup
         const popup = document.getElementById('resultPopup');
         const resultText = document.getElementById('result');
-        const scoreNumber = document.getElementById('scoreNumber','/25');
+        const scoreNumber = document.getElementById('scoreNumber/25');
         const scorePercentage = document.getElementById('scorePercentage');
         
         if (resultText && scoreNumber && popup) {
