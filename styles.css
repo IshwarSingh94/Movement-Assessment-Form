@@ -107,7 +107,7 @@ h1 {
     margin-bottom: 20px;
     font-size: 2.2em;
     letter-spacing: 1px;
-    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+    text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
     animation: textPulse 3s infinite alternate;
 }
 
